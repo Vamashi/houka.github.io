@@ -26,5 +26,37 @@
 <body>
   <!-- your content here... -->
   <p id="data"> Hello world! </p>
+  
+  <script>
+    var mysql = require('mysql');
+
+    var con = mysql.createConnection({
+      host: "mysql2.joinserver.xyz",
+      user: "u85451_zTU7dg6Pek",
+      password: "jzjBhRu^dz4Y!m3fZdJrL7U@",
+      database: "s85451_data"
+    });
+
+    var items = ""
+
+    function myfunc(item) {
+        console.log(item["username"]+":"+item["usergroup"])
+        items += item["username"]+":"+item["usergroup"]
+    }
+
+    con.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        con.query("SELECT * FROM `pma__users`", function (err, result) {
+          if (err) throw err;
+          // onsole.log("Result: " + result["username"]);
+          // console.log(JSON.stringify(result, null, 4));
+
+          result.forEach(myfunc)
+        });
+      });
+
+    document.getElementById('test').textContent = items
+  </script>
 </body>
 </html>
